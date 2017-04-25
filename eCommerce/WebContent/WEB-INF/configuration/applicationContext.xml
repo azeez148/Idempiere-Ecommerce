@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+      
+       <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+       <property name="url" value="jdbc:postgresql://nestit-iso-186:5432/eCommerce"/>
+     <!--  <property name="url" value="jdbc:postgresql://localhost:5432/eCommerce"/>  -->
+     <!--  <property name="url" value="jdbc:postgresql://52.36.79.151:5432/eCommerce"/>  -->
+        <property name="username" value="postgres"/>
+          <property name="password" value="idempiere"/> 
+          <!-- <property name="password" value="postgres"/> -->
+    </bean>
+        
+        <bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+		<property name="defaultEncoding" value="UTF-8"/>
+	</bean>
+	
+	
+
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="lang" />
+	</bean>
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="en"/>
+	</bean>
+
+	<bean id="handlerMapping"
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors">
+			<ref bean="localeChangeInterceptor" />
+		</property>
+	</bean>
+
+</beans>

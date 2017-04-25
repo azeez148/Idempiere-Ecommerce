@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	<context:component-scan base-package="com.ecommerce.mvc" />
+	<context:property-placeholder location="classpath:application.properties"/>	
+	<mvc:annotation-driven />
+	<mvc:default-servlet-handler />
+<!-- 	<mvc:resources mapping="/images/**" location="file:///E:/New" /> -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+	<!-- Services Defenition -->
+	
+	<bean id="sOAPWebServiceImp" class="com.ecommerce.service.impl.SOAPWebServiceImp">
+	</bean>
+	
+	<bean id="commonService" class="com.ecommerce.service.impl.CommonServiceImpl">
+	</bean>
+	
+	<bean id="loginService" class="com.ecommerce.service.impl.LoginServiceImpl">
+	<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="userService" class="com.ecommerce.service.impl.UserServiceImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="cartService" class="com.ecommerce.service.impl.CartServiceImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="wishListService" class="com.ecommerce.service.impl.WishListServiceImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="categoryService" class="com.ecommerce.service.impl.CategoryServiceImpl">
+	</bean>
+	
+	<bean id="productService" class="com.ecommerce.service.impl.ProductServiceImpl">
+	</bean>
+	
+	<bean id="adminService" class="com.ecommerce.service.impl.AdminServiceImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<bean id="productCategoryService" class="com.ecommerce.service.impl.AdminProductCategoryServiceImpl">
+	<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<bean id="priceListService" class="com.ecommerce.service.impl.PriceListServiceImpl">
+	</bean>
+	
+	
+	<bean id="webServiceConnection" class="org.idempiere.webservice.client.net.WebServiceConnection">
+	    <property name="attempts" value="3" />
+	    <property name="timeout" value="5000" />
+	    <property name="attemptsTimeout" value="5000" />
+	    <property name="url" value="${BASE_URL}" />
+	    <property name="appName" value="WS Client" />
+	</bean>
+
+	<bean id="loginRequest" class="org.idempiere.webservice.client.base.LoginRequest">
+	    <property name="user" value="${USER}" />
+	    <property name="pass" value="${PASSWORD}" />
+	    <property name="clientID" value="${CLIENT_ID}" />
+	    <property name="roleID" value="${ROLE_ID}" />
+	    <property name="orgID" value="${ORG_ID}" />
+	    <property name="stage" value="2" />
+	</bean>
+	
+</beans>
